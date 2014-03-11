@@ -5,7 +5,7 @@ library(mapproj)
 library(XML)
 library(stringr)
 
-file <- "~/Dropbox/website redesign/content/All tables/meetings_data.html"
+file <- "~/Dropbox/website redesign/content/Maps_Graphs/Full Annual Meetings Table  The History of ESA from the Historical Records Committee.csv"
 
 getDocNodeVal=function(doc, path)
 {
@@ -26,11 +26,7 @@ gGeoCode=function(str)
 
 #read in and clean city cata
 
-citydat <- readHTMLTable(file, stringsAsFactors=FALSE)
-citydat <- citydat$tblMain
-colnames(citydat) <- citydat[2,]
-citydat <- citydat[-c(1:2), -c(1, 7:length(citydat))] #strip messy stuff and leave only stuff to use later
-cities <- unique(citydat$Location[-which(citydat$Location=="")])#get rid of empty values and pull location column
+citydat <- read.csv(file, stringsAsFactors=FALSE)
 cities <- str_replace(cities, ",", "") #strip commas from cities so search doesn't return a list
 
 getlatlong <- function(locations) { #get lat and long for each location using gGeoCode
