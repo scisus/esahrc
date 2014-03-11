@@ -25,12 +25,6 @@ gGeoCode=function(str)
     c(lat,lng)
 }
 
-
-#read in and clean city cata
-
-citydat <- read.csv(file, stringsAsFactors=FALSE)
-cities <- str_replace(cities, ",", "") #strip commas from cities so search doesn't return a list
-
 getlatlong <- function(locations) { #get lat and long for each location using gGeoCode
     dat <- cbind(lat=numeric(0), long=numeric(0))
     for (i in 1:length(locations)) {
@@ -38,9 +32,15 @@ getlatlong <- function(locations) { #get lat and long for each location using gG
         dat <- rbind(dat, latlon, deparse.level=0) 
         Sys.sleep(.5) #returns null values without this
     }
-dat <- data.frame(location=locations, dat) 
+    dat <- data.frame(location=locations, dat) 
 }
 
+#read in and clean city cata
+
+citydat <- read.csv(file, stringsAsFactors=FALSE)
+cities <- str_replace(cities, ",", "") #strip commas from cities so search doesn't return a list
+
+# get lat/long for cities and put in a dataframe
 dat <- getlatlong(cities) 
 
 ##fix classes
@@ -52,7 +52,8 @@ dat$long <- as.numeric(levels(dat$long))[dat$long]
 map <- get_map(location = "Iowa", zoom = 3, maptype = "roadmap") #make a basemap centered on kansas
 p <- ggmap(map)
 p <- p + labs(title = "ESA Meetings")
-p <- p + geom_point(data = dat, aes(x = long, y = lat), size = 5)
+p <- p + geom_point(data = dat, aes(x = long, y = lat), size = 4)
 #p <- p + geom_text(data = dat, aes(x = long, y = lat, label = location), hjust = -.2)
 
 print(p)
+
