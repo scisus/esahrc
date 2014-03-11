@@ -1,5 +1,7 @@
 # Make a map of all cities ESA has been held at
+## This code has an MIT license
 ## functions getDocNodeVale and gGeoCode are from https://github.com/ezgraphs/R-Programs/blob/master/GoogleGeocodeMap.R
+
 library(ggmap)
 library(mapproj)
 library(XML)
