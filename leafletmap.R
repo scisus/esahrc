@@ -3,7 +3,7 @@ library(magrittr)
 library(stringr)
 library(XML)
 
-file <- "~/Dropbox/website redesign/content/Maps_Graphs/Full Annual Meetings Table The Ecological Society of Americas History and Records.csv"
+file <- "Full Annual Meetings Table The Ecological Society of Americas History and Records.csv"
 
 getDocNodeVal=function(doc, path)
 {
