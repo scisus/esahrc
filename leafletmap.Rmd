@@ -1,0 +1,38 @@
+---
+title: "Map of ESA Meetings"
+author: "Susannah Tysor"
+date: "2016/07/21"
+output: html_document
+---
+
+```{r, echo=FALSE, message = FALSE}
+library(leaflet)
+library(magrittr)
+library(ggmap)
+
+file <- "Full Annual Meetings Table – The Ecological Society of Americas History and Records.csv"
+
+citydat <- read.csv(file, stringsAsFactors=FALSE)
+
+cities <- unique(citydat$Location)
+
+#get latitude and longitude for cities. Thanks to google!
+lonlat <- data.frame(lon = numeric(0), lat = numeric(0))
+for (i in 1:length(cities)) {
+    if (cities[i] == "University of Maryland") {
+        lonlat <- rbind(lonlat, geocode("College Park, MD"))
+    }  else {
+        lonlat <- rbind(lonlat, geocode(cities[i]))
+    }
+}
+lonlat <- cbind(Location = cities, lonlat)
+
+citydat <- merge(citydat, lonlat[!is.na(lonlat$lon),])
+write.csv(citydat, "ESAMeetingsLatLon.csv", row.names = FALSE)
+
+
+m <- leaflet() %>%
+    addProviderTiles("Stamen.TonerLite") %>%  # Add default OpenStreetMap map tiles
+    addMarkers(lng=citydat$lon, lat=citydat$lat, popup=citydat$Year)
+m  # Print the map
+```
