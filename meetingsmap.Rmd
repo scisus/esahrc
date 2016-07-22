@@ -1,10 +1,3 @@
----
-title: "Map of ESA Meetings"
-author: "Susannah Tysor"
-date: "2016/07/21"
-output: html_document
----
-
 ```{r, echo=FALSE, message = FALSE}
 library(leaflet)
 library(magrittr)
@@ -31,8 +24,11 @@ citydat <- merge(citydat, lonlat[!is.na(lonlat$lon),])
 write.csv(citydat, "ESAMeetingsLatLon.csv", row.names = FALSE)
 
 
-m <- leaflet() %>%
+m <- leaflet(width = "100%") %>%
     addProviderTiles("Stamen.TonerLite") %>%  # Add default OpenStreetMap map tiles
-    addMarkers(lng=citydat$lon, lat=citydat$lat, popup=citydat$Year)
+    addCircleMarkers(lng=citydat$lon, lat=citydat$lat, 
+                     radius = 3,
+                     color = " #019390",
+                     popup=paste(citydat$Location, citydat$Year, sep = "<br />"))
 m  # Print the map
 ```
