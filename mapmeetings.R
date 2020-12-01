@@ -7,7 +7,7 @@ library(mapproj)
 library(XML)
 library(stringr)
 
-file <- "~/Dropbox/website redesign/content/Maps_Graphs/Full Annual Meetings Table  The History of ESA from the Historical Records Committee.csv"
+file <- "~/Dropbox/website redesign/content/Maps_Graphs/Full Annual Meetings Table – The Ecological Society of Americas History and Records.csv"
 
 getDocNodeVal=function(doc, path)
 {
@@ -29,10 +29,10 @@ getlatlong <- function(locations) { #get lat and long for each location using gG
     dat <- cbind(lat=numeric(0), long=numeric(0))
     for (i in 1:length(locations)) {
         latlon <- gGeoCode(locations[i])[c(1:2)] #choose only the first location returned. sometimes gGeoCode returns an empty list instead of a vector of latitude and longitude. That breaks this loop.
-        dat <- rbind(dat, latlon, deparse.level=0) 
+        dat <- rbind(dat, latlon, deparse.level=0)
         Sys.sleep(.5) #returns null values without this
     }
-    dat <- data.frame(location=locations, dat) 
+    dat <- data.frame(location=locations, dat)
 }
 
 #read in and clean city cata
@@ -41,7 +41,7 @@ citydat <- read.csv(file, stringsAsFactors=FALSE)
 cities <- str_replace(cities, ",", "") #strip commas from cities so search doesn't return a list
 
 # get lat/long for cities and put in a dataframe
-dat <- getlatlong(cities) 
+dat <- getlatlong(cities)
 
 ##fix classes
 dat$location <- as.character(dat$location)
