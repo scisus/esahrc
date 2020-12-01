@@ -6,4 +6,7 @@
 
 # Images
 *.png
+
+# R project
 .Rproj.user
+*.Rproj
